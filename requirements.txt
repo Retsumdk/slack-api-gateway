@@ -1,4 +1,5 @@
-requests>=2.31.0
-PyYAML>=6.0.1
-python-dotenv>=1.0.0
-click>=8.1.7
+# slack-api-gateway has no runtime dependencies. Everything it needs — HTTP,
+# JSON, form encoding, multipart upload — ships with CPython's standard library.
+#
+# This file exists so that `pip install -r requirements.txt` remains a valid,
+# explicit no-op rather than an error.

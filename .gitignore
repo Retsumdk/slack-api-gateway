@@ -9,7 +9,13 @@ venv/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+.coverage
+.tox/
 coverage.xml
 htmlcov/
 *.log
 .DS_Store
+.coverage.*
+.eggs/
+.coverage
+coverage.xml

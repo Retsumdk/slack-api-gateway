@@ -1,0 +1,16 @@
+slack-api-gateway offline demo
+transport=stub  network=disabled  clock=virtual
+
+1. auth.test            -> Acme Rocketry (T0ACME) as B0GATE
+2. conversations.list   -> #engineering, #ops, #random  (3 across 2 pages)
+3. conversations.info   -> 2 lookups, 1 served from cache
+4. chat.postMessage     -> 429 then retry -> ts=1723456789.000100 (retries=1, slept=1.0s)
+5. identical repost     -> replayed ts=1723456789.000100 (idempotent_replays=1, extra requests=0)
+6. conversations.history-> NotFoundError[channel_not_found] — not retried
+7. users.lookupByEmail -> NotFoundError[users_not_found] — not retried
+8. upload 3-step flow   -> id=F0FILE name=deploy-log.txt size=19 (presigned POSTs=1)
+9. cursor loop          -> PaginationError[pagination_loop] after 2 pages
+
+stats {"cache": {"entries": 1.0, "evictions": 0.0, "hit_rate": 0.333, "hits": 1.0, "misses": 2.0}, "cache_hits": 1, "calls": 11, "idempotent_replays": 1, "paced_seconds": 0.0, "rate_limited": 1, "retries": 1, "transport_errors": 0}
+
+RESULT: PASS
